@@ -17,6 +17,7 @@ steps:
     command: 'restore'
     projects: '**/*.csproj'
 
+# This task builds the project
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - $(buildConfiguration)'
   inputs:
@@ -24,6 +25,7 @@ steps:
     arguments: '--no-restore --configuration $(buildConfiguration)'
     projects: '**/*.csproj'
 
+# This task packages the project with a version of 1.0.0
 - task: DotNetCoreCLI@2
   displayName: 'Pack the project - $(buildConfiguration)'
   inputs:
@@ -31,10 +33,11 @@ steps:
     projects: '**/*.csproj'
     arguments: '--no-build --configuration $(buildConfiguration)'
     versioningScheme: byPrereleaseNumber
-    majorVersion: '1'
+    majorVersion: '2'
     minorVersion: '0'
     patchVersion: '0'
  
+# This task pushes the package to your Tailspin.SpaceGame.Web.Models Azure Artifacts feed
 - task: NuGetCommand@2
   displayName: 'Publish NuGet package'
   inputs:
